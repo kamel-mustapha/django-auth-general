@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-API_URL = "/api/v1/"
+API_URL = "api/v1/"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
