@@ -142,9 +142,11 @@ def reset_password(req):
         token = req.GET.get("token")
         
         if not token: return HttpResponse("No token provided")
-        
+
         decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         
+        if int(time.time()) > decoded_token.get("exp"): return HttpResponse(invalid_token)
+
         return render(req, "reset-password.html", {"id": decoded_token.get("id")})
     
     elif req.method == "POST":
