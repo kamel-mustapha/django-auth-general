@@ -1,12 +1,14 @@
+import os
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-n1=nb&*37y)@hza4o)lcqro6)kh-(==04bkofj8bj!*4hwnr^+'
+SECRET_KEY = os.environ.get("SECRET_KEY", "devsecretkey")
 
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", 1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,7 +26,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -78,7 +80,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 STATIC_URL = 'static/'
 
@@ -87,3 +89,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# smtp config
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+
+EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+
+COMPANY_NAME = os.environ.get("COMPANY_NAME")
+
+ACTIVATION_REDIRECT_URL = os.environ.get("ACTIVATION_REDIRECT_URL")
+
+SUPPORT_EMAIL = os.environ.get("SUPPORT_EMAIL")
+
+REDIRECTION_AFTER_ACTIVATION = os.environ.get("REDIRECTION_AFTER_ACTIVATION")
+
+APPLICATION_LOGIN_PAGE = os.environ.get("APPLICATION_LOGIN_PAGE")
+
+RESET_PASSWORD_LINK = os.environ.get("RESET_PASSWORD_LINK")
